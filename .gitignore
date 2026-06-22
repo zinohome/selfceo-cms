@@ -6,3 +6,4 @@ data/
 *.key
 dist/
 .superpowers/
+tsconfig.tsbuildinfo
