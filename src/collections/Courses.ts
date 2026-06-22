@@ -1,9 +1,18 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, Where } from 'payload'
 
 export const Courses: CollectionConfig = {
   slug: 'courses',
   access: {
-    read: () => true,
+    read: ({ req: { user } }): boolean | Where => {
+      if (user) return true
+      // 匿名用户只能读取已发布的免费课程
+      return {
+        and: [
+          { isPublished: { equals: true } } as Where,
+          { isPremium: { equals: false } } as Where,
+        ],
+      }
+    },
   },
   admin: {
     useAsTitle: 'title',

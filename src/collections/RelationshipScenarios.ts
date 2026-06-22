@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload'
 export const RelationshipScenarios: CollectionConfig = {
   slug: 'relationship-scenarios',
   access: {
-    read: () => true,
+    read: ({ req: { user } }) => user ? true : { isPublished: { equals: true } },
   },
   admin: {
     useAsTitle: 'title',
@@ -34,6 +34,9 @@ export const RelationshipScenarios: CollectionConfig = {
       type: 'textarea',
       required: true,
       admin: { description: '点击场景后传给小研 AI 的预设 prompt' },
+      access: {
+        read: ({ req: { user } }) => Boolean(user),
+      },
     },
     {
       name: 'isPublished',

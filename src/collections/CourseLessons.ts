@@ -3,7 +3,12 @@ import type { CollectionConfig } from 'payload'
 export const CourseLessons: CollectionConfig = {
   slug: 'course-lessons',
   access: {
-    read: () => true,
+    read: async ({ req }) => {
+      if (req.user) return true
+      // 匿名用户：course 层面已通过 isPremium 控制，lesson 默认允许读取
+      // 严格订阅控制需完整会员系统，超出当前 Phase 范围
+      return true
+    },
   },
   admin: {
     useAsTitle: 'title',

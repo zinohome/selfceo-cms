@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload'
 export const Meditations: CollectionConfig = {
   slug: 'meditations',
   access: {
-    read: () => true,
+    read: ({ req: { user } }) => user ? true : { isPublished: { equals: true } },
   },
   admin: {
     useAsTitle: 'title',
