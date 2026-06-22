@@ -1,14 +1,19 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, Where } from 'payload'
 
 export const CourseLessons: CollectionConfig = {
   slug: 'course-lessons',
   access: {
-    read: async ({ req }) => {
-      if (req.user) return true
-      // 匿名用户：course 层面已通过 isPremium 控制，lesson 默认允许读取
-      // 严格订阅控制需完整会员系统，超出当前 Phase 范围
-      return true
-    },
+    // Authenticated users (admins) see all; anonymous users only see lessons
+    // belonging to published free courses.
+    read: ({ req: { user } }): boolean | Where =>
+      user
+        ? true
+        : {
+            and: [
+              { 'course.isPublished': { equals: true } } as Where,
+              { 'course.isPremium': { equals: false } } as Where,
+            ],
+          },
   },
   admin: {
     useAsTitle: 'title',
