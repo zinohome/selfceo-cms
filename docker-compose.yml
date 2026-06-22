@@ -1,0 +1,64 @@
+name: selfceo-cms
+
+services:
+  payload:
+    build:
+      context: .
+      target: builder
+    command: npm run dev
+    ports:
+      - "3001:3000"
+    depends_on:
+      payload-db:
+        condition: service_healthy
+      minio:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgresql://payload:password@payload-db:5432/selfceo_cms
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:-dev-secret-change-in-prod}
+      NEXT_PUBLIC_SERVER_URL: http://localhost:3001
+      S3_ENDPOINT: http://minio:9000
+      S3_ACCESS_KEY: minioadmin
+      S3_SECRET_KEY: minioadmin
+      S3_BUCKET: selfceo-media
+      S3_REGION: us-east-1
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - cms-network
+
+  payload-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: payload
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: selfceo_cms
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U payload -d selfceo_cms"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - cms-network
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - ./data/minio:/data
+    networks:
+      - cms-network
+
+networks:
+  cms-network:
+    driver: bridge

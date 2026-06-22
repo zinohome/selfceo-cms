@@ -1,0 +1,40 @@
+name: selfceo-cms
+
+services:
+  payload:
+    image: selfceo-cms:latest
+    restart: always
+    depends_on:
+      payload-db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET}
+      NEXT_PUBLIC_SERVER_URL: ${NEXT_PUBLIC_SERVER_URL}
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+      S3_BUCKET: ${S3_BUCKET:-selfceo-media}
+      S3_REGION: ${S3_REGION:-ap-southeast-1}
+    networks:
+      - 1panel-network
+
+  payload-db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-payload}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: selfceo_cms
+    volumes:
+      - /data/selfceo-cms/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-payload} -d selfceo_cms"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - 1panel-network
+
+networks:
+  1panel-network:
+    external: true
