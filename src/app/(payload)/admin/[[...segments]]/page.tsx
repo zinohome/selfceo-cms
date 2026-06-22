@@ -1,18 +1,16 @@
 import { RootPage, generatePageMetadata } from '@payloadcms/next/views'
 import { importMap } from '../importMap'
-import type { SanitizedConfig } from 'payload'
+import config from '@payload-config'
 
 type Args = {
   params: Promise<{ segments: string[] }>
   searchParams: Promise<{ [key: string]: string | string[] }>
 }
 
-const configPromise = import('@payload-config').then((m) => m.default as unknown as SanitizedConfig)
-
 export const generateMetadata = ({ params, searchParams }: Args) =>
-  generatePageMetadata({ config: configPromise, params, searchParams })
+  generatePageMetadata({ config, params, searchParams })
 
 const Page = ({ params, searchParams }: Args) =>
-  RootPage({ config: configPromise, importMap, params, searchParams })
+  RootPage({ config, importMap, params, searchParams })
 
 export default Page
