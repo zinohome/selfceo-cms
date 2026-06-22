@@ -1,3 +1,12 @@
+// Shim: fix @next/env default export incompatibility with tsx CJS mode
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const nextEnv = require('@next/env')
+if (nextEnv.default === undefined || nextEnv.default === null) {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const m = require('@next/env')
+  Object.defineProperty(m, 'default', { value: m, configurable: true })
+}
+
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { meditationsData, coursesData, fragmentsData, scenariosData } from './data'

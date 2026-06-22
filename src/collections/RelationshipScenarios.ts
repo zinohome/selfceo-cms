@@ -2,6 +2,9 @@ import type { CollectionConfig } from 'payload'
 
 export const RelationshipScenarios: CollectionConfig = {
   slug: 'relationship-scenarios',
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'group', 'isPublished', 'sortOrder'],
