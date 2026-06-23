@@ -3,7 +3,7 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   output: 'standalone',
-  allowedDevOrigins: ['192.168.66.41'],
+  allowedDevOrigins: ['192.168.66.41', '192.168.66.41:3901'],
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

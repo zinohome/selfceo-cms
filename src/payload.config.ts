@@ -16,8 +16,13 @@ import { Users } from './collections/Users'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const serverURL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001'
+
 export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || 'CHANGE_THIS_IN_PRODUCTION',
+  // Payload sanitize.js auto-adds serverURL to csrf; cookie auth requires Sec-Fetch-Site: same-origin
+  // which all modern browsers send for same-origin JS fetch requests
+  csrf: [],
   admin: {
     user: Users.slug,
   },
@@ -54,5 +59,5 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001',
+  serverURL,
 })
