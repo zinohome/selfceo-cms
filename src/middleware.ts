@@ -19,8 +19,8 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Apply to admin pages and API routes; skip static assets
     '/admin/:path*',
     '/api/:path*',
+    '/portal/:path*',
   ],
 }
