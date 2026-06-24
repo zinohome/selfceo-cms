@@ -1,43 +1,40 @@
 /*
   SelfCEO CMS — Payload Admin Dark Theme
-  Injected via Next.js layout import (src/app/(payload)/admin/layout.tsx).
-  Overrides Payload 3.x CSS custom properties defined in dark mode.
+  Imported in src/app/(payload)/admin/layout.tsx.
+
+  Strategy: directly override --theme-elevation-* in [data-theme="dark"].
+  This runs AFTER colors.scss defines the defaults, so specificity wins.
+  Light mode is untouched — only dark mode gets the custom OKLCH palette.
 */
 
-[data-theme="dark"],
-:root {
-  /* Base color scale — OKLCH deep slate/indigo */
-  --color-base-0:    oklch(0.10 0.025 265);
-  --color-base-50:   oklch(0.12 0.025 265);
-  --color-base-100:  oklch(0.15 0.028 265);
-  --color-base-150:  oklch(0.17 0.028 265);
-  --color-base-200:  oklch(0.20 0.030 265);
-  --color-base-250:  oklch(0.22 0.030 265);
-  --color-base-300:  oklch(0.26 0.032 265);
-  --color-base-350:  oklch(0.30 0.032 265);
-  --color-base-400:  oklch(0.35 0.030 265);
-  --color-base-450:  oklch(0.40 0.028 265);
-  --color-base-500:  oklch(0.48 0.025 265);
-  --color-base-550:  oklch(0.55 0.022 265);
-  --color-base-600:  oklch(0.62 0.018 265);
-  --color-base-650:  oklch(0.68 0.015 265);
-  --color-base-700:  oklch(0.74 0.012 265);
-  --color-base-750:  oklch(0.79 0.010 265);
-  --color-base-800:  oklch(0.83 0.008 265);
-  --color-base-850:  oklch(0.87 0.006 265);
-  --color-base-900:  oklch(0.91 0.004 265);
-  --color-base-950:  oklch(0.94 0.002 265);
-  --color-base-1000: oklch(0.97 0.001 265);
+html[data-theme="dark"] {
+  /* Background / surface scale — OKLCH deep slate-indigo (darkest → lightest) */
+  --theme-elevation-0:    oklch(0.09 0.022 265);  /* page background */
+  --theme-elevation-50:   oklch(0.11 0.022 265);
+  --theme-elevation-100:  oklch(0.14 0.025 265);  /* card / input surface */
+  --theme-elevation-150:  oklch(0.16 0.025 265);
+  --theme-elevation-200:  oklch(0.19 0.027 265);
+  --theme-elevation-250:  oklch(0.22 0.027 265);
+  --theme-elevation-300:  oklch(0.26 0.030 265);  /* border */
+  --theme-elevation-350:  oklch(0.30 0.030 265);
+  --theme-elevation-400:  oklch(0.35 0.028 265);
+  --theme-elevation-450:  oklch(0.40 0.026 265);
+  --theme-elevation-500:  oklch(0.47 0.022 265);  /* mid-tone */
+  --theme-elevation-550:  oklch(0.54 0.020 265);
+  --theme-elevation-600:  oklch(0.61 0.016 265);
+  --theme-elevation-650:  oklch(0.67 0.013 265);
+  --theme-elevation-700:  oklch(0.73 0.010 265);
+  --theme-elevation-750:  oklch(0.78 0.008 265);
+  --theme-elevation-800:  oklch(0.82 0.006 265);
+  --theme-elevation-850:  oklch(0.86 0.004 265);
+  --theme-elevation-900:  oklch(0.90 0.003 265);
+  --theme-elevation-950:  oklch(0.93 0.002 265);
+  --theme-elevation-1000: oklch(0.96 0.001 265);  /* primary text */
 
-  /* Accent / brand — indigo */
-  --color-brand:       oklch(0.62 0.22 258);
-  --color-brand-dark:  oklch(0.52 0.25 258);
-  --color-brand-light: oklch(0.72 0.18 258);
-}
+  /* Override semantic tokens that app.scss sets */
+  --theme-bg:       var(--theme-elevation-0);
+  --theme-input-bg: var(--theme-elevation-100);
+  --theme-text:     var(--theme-elevation-1000);
 
-/* Force dark color scheme for entire admin */
-html[data-theme="dark"],
-html {
   color-scheme: dark;
-  background-color: var(--color-base-0);
 }
