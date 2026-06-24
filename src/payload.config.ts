@@ -26,7 +26,7 @@ export default buildConfig({
   csrf: [],
   admin: {
     user: Users.slug,
-    theme: 'dark',
+    theme: 'auto',
   },
   i18n: {
     supportedLanguages: { zh },
