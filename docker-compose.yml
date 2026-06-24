@@ -27,7 +27,7 @@ services:
       - /app/node_modules
       - /app/.next
     networks:
-      - cms-network
+      - 1panel-network
 
   payload-db:
     image: postgres:16-alpine
@@ -36,14 +36,14 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: selfceo_cms
     volumes:
-      - ./data/postgres:/var/lib/postgresql/data
+      - /data/selfceo-cms/postgres:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U payload -d selfceo_cms"]
       interval: 5s
       timeout: 3s
       retries: 5
     networks:
-      - cms-network
+      - 1panel-network
 
   minio:
     image: minio/minio:latest
@@ -55,10 +55,10 @@ services:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
     volumes:
-      - ./data/minio:/data
+      - /data/selfceo-cms/minio:/data
     networks:
-      - cms-network
+      - 1panel-network
 
 networks:
-  cms-network:
-    driver: bridge
+  1panel-network:
+    external: true

@@ -5,6 +5,7 @@ import { importMap } from './importMap'
 import config from '@payload-config'
 import React from 'react'
 import './payload-colors.css'
+import '@payloadcms/ui/styles.css'
 import './dark-theme.css'
 
 type Args = {
