@@ -4,6 +4,7 @@ import type { ServerFunctionClient } from 'payload'
 import { importMap } from './importMap'
 import config from '@payload-config'
 import React from 'react'
+import './dark-theme.css'
 
 type Args = {
   children: React.ReactNode

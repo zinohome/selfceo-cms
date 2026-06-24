@@ -1,0 +1,43 @@
+/*
+  SelfCEO CMS — Payload Admin Dark Theme
+  Injected via Next.js layout import (src/app/(payload)/admin/layout.tsx).
+  Overrides Payload 3.x CSS custom properties defined in dark mode.
+*/
+
+[data-theme="dark"],
+:root {
+  /* Base color scale — OKLCH deep slate/indigo */
+  --color-base-0:    oklch(0.10 0.025 265);
+  --color-base-50:   oklch(0.12 0.025 265);
+  --color-base-100:  oklch(0.15 0.028 265);
+  --color-base-150:  oklch(0.17 0.028 265);
+  --color-base-200:  oklch(0.20 0.030 265);
+  --color-base-250:  oklch(0.22 0.030 265);
+  --color-base-300:  oklch(0.26 0.032 265);
+  --color-base-350:  oklch(0.30 0.032 265);
+  --color-base-400:  oklch(0.35 0.030 265);
+  --color-base-450:  oklch(0.40 0.028 265);
+  --color-base-500:  oklch(0.48 0.025 265);
+  --color-base-550:  oklch(0.55 0.022 265);
+  --color-base-600:  oklch(0.62 0.018 265);
+  --color-base-650:  oklch(0.68 0.015 265);
+  --color-base-700:  oklch(0.74 0.012 265);
+  --color-base-750:  oklch(0.79 0.010 265);
+  --color-base-800:  oklch(0.83 0.008 265);
+  --color-base-850:  oklch(0.87 0.006 265);
+  --color-base-900:  oklch(0.91 0.004 265);
+  --color-base-950:  oklch(0.94 0.002 265);
+  --color-base-1000: oklch(0.97 0.001 265);
+
+  /* Accent / brand — indigo */
+  --color-brand:       oklch(0.62 0.22 258);
+  --color-brand-dark:  oklch(0.52 0.25 258);
+  --color-brand-light: oklch(0.72 0.18 258);
+}
+
+/* Force dark color scheme for entire admin */
+html[data-theme="dark"],
+html {
+  color-scheme: dark;
+  background-color: var(--color-base-0);
+}
