@@ -5,6 +5,7 @@ services:
     build:
       context: .
       target: builder
+    entrypoint: ["/app/entrypoint.sh"]
     command: npm run dev
     ports:
       - "3901:3000"
@@ -24,8 +25,8 @@ services:
       S3_REGION: us-east-1
     volumes:
       - .:/app
-      - /app/node_modules
-      - /app/.next
+      - selfceo_node_modules:/app/node_modules
+      - selfceo_next_cache:/app/.next
     networks:
       - 1panel-network
 
@@ -58,6 +59,10 @@ services:
       - /data/selfceo-cms/minio:/data
     networks:
       - 1panel-network
+
+volumes:
+  selfceo_node_modules:
+  selfceo_next_cache:
 
 networks:
   1panel-network:
