@@ -25,6 +25,8 @@ export default buildConfig({
   csrf: [],
   admin: {
     user: Users.slug,
+    theme: 'dark',
+    css: path.resolve(dirname, 'admin-dark.css'),
   },
   editor: lexicalEditor(),
   db: postgresAdapter({
