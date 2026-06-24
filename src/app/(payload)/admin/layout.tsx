@@ -4,7 +4,7 @@ import type { ServerFunctionClient } from 'payload'
 import { importMap } from './importMap'
 import config from '@payload-config'
 import React from 'react'
-import '@payloadcms/ui/dist/scss/colors.scss'
+import './payload-colors.css'
 import './dark-theme.css'
 
 type Args = {
