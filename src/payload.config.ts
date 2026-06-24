@@ -2,6 +2,7 @@ import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { en } from '@payloadcms/translations/languages/en'
 import { zh } from '@payloadcms/translations/languages/zh'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -29,7 +30,7 @@ export default buildConfig({
     theme: 'auto',
   },
   i18n: {
-    supportedLanguages: { zh },
+    supportedLanguages: { en, zh },
     fallbackLanguage: 'zh',
   },
   editor: lexicalEditor(),
